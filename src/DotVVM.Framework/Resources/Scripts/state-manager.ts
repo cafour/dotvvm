@@ -253,7 +253,8 @@ function createWrappedObservable<T>(initialValue: T, typeHint: TypeDefinition | 
             const unmappedValue = unmapKnockoutObservables(newValue);
             const coerceResult = coerce(unmappedValue, typeHint || { type: "dynamic" }, (this as any)[currentStateSymbol]);
             updater(_ => coerceResult)
-            return coerceResult;
+            notify(coerceResult)
+            return obs.peek();
         } catch (err) {
             (this as any)[lastSetErrorSymbol] = err;
             console.debug(`Can not update observable to ${newValue}:`, err)
