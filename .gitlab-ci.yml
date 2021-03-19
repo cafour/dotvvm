@@ -1,0 +1,7 @@
+experiment:
+  image: ubuntu:latest
+  stage: build
+  script:
+    - echo "Hello, GitLab CI!"
+  only:
+    - gitlab-ci-test
