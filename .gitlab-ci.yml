@@ -2,7 +2,12 @@ msbuild:
   image: registry.gitlab.com/cafstep/dotvvm-test/dotvvm
   stage: build
   script:
-    - cd src/DotVVM.Framework && npm install && npm run build && cd ../..
-    - dotnet build ./src/DotVVM.sln
+    - cd src/DotVVM.Framework && npm ci --cache $CI_PROJECT_DIR/.npm --prefer-offline && npm run build && cd ../..
+    - dotnet restore --packages $CI_PROJECT_DIR/.nuget
+    - dotnet build --no-restore ./src/DotVVM.sln
+  cache:
+    paths:
+      - .npm/
+      - .nuget/
   only:
     - gitlab-ci-test
