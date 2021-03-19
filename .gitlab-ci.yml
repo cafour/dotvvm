@@ -1,7 +1,7 @@
-experiment:
+msbuild:
   image: mcr.microsoft.com/dotnet/aspnet:5.0
   stage: build
   script:
-    - echo "Hello, GitLab CI!"
+    - dotnet build ./src/DotVVM.sln
   only:
     - gitlab-ci-test
