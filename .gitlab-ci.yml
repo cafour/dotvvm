@@ -1,5 +1,5 @@
 experiment:
-  image: ubuntu:latest
+  image: mcr.microsoft.com/dotnet/aspnet:5.0
   stage: build
   script:
     - echo "Hello, GitLab CI!"
