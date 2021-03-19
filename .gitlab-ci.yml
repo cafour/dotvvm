@@ -6,8 +6,8 @@ msbuild:
         && npm ci --cache $CI_PROJECT_DIR/.npm --prefer-offline
         && npm run build
         && cd $CI_PROJECT_DIR/src
-        && dotnet restore --packages $CI_PROJECT_DIR/.nuget DotVVM.sln
-        && dotnet build --no-restore DotVVM.sln
+        && dotnet restore --packages $CI_PROJECT_DIR/.nuget Crossplatform.sln
+        && dotnet build --no-restore Crossplatform.sln
   cache:
     paths:
       - .npm/
