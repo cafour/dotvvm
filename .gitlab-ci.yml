@@ -1,5 +1,5 @@
 msbuild:
-  image: mcr.microsoft.com/dotnet/aspnet:5.0
+  image: mcr.microsoft.com/dotnet/sdk:5.0
   stage: build
   script:
     - ls
