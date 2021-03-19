@@ -3,6 +3,7 @@ msbuild:
   stage: build
   script:
     - ls
+    - dotnet --info
     - dotnet build ./src/DotVVM.sln
   only:
     - gitlab-ci-test
