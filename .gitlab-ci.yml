@@ -1,9 +1,8 @@
 msbuild:
-  image: mcr.microsoft.com/dotnet/sdk:5.0
+  image: registry.gitlab.com/cafstep/dotvvm-test/dotvvm
   stage: build
   script:
-    - ls
-    - dotnet --info
+    - cd src/DotVVM.Framework && npm install && npm run build && cd ../..
     - dotnet build ./src/DotVVM.sln
   only:
     - gitlab-ci-test
