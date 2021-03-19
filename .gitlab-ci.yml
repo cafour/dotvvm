@@ -2,7 +2,7 @@ msbuild:
   image: registry.gitlab.com/cafstep/dotvvm-test/dotvvm
   stage: build
   script:
-    - |
+    - >
       cd src/DotVVM.Framework
         && npm ci --cache $CI_PROJECT_DIR/.npm --prefer-offline
         && npm run build
