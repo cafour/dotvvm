@@ -1,4 +1,4 @@
-msbuild:
+build-solution:
   image: registry.gitlab.com/cafstep/dotvvm-test/dotvvm
   stage: build
   script:
@@ -8,6 +8,20 @@ msbuild:
         && cd $CI_PROJECT_DIR/src
         && dotnet restore --packages $CI_PROJECT_DIR/.nuget Crossplatform.sln
         && dotnet build --no-restore Crossplatform.sln
+  cache:
+    paths:
+      - .npm/
+      - .nuget/
+  only:
+    - gitlab-ci-test
+
+run-unit-tests:
+  image: registry.gitlab.com/cafstep/dotvvm-test/dotvvm
+  stage: test
+  script:
+    - dotnet test $CI_PROJECT_DIR/src/DotVVM.Framework.Tests.Common
+        --logger "junit,LogFilePath=$CI_PROJECT_DIR/artifacts/TEST-Common.xml"
+        --configuration Release
   cache:
     paths:
       - .npm/
