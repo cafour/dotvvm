@@ -28,6 +28,7 @@ run-unit-tests:
   stage: test
   script:
     - dotnet test $CI_PROJECT_DIR/src/DotVVM.Framework.Tests.Common
+        --no-build
         --logger "junit,LogFilePath=$CI_PROJECT_DIR/artifacts/Common.JUnit.xml"
         --configuration Release
   artifacts:
