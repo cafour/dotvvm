@@ -26,5 +26,8 @@ run-unit-tests:
     paths:
       - .npm/
       - .nuget/
+  artifacts:
+    reports:
+      junit: artifacts/TEST-Common.xml
   only:
     - gitlab-ci-test
