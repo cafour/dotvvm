@@ -1,3 +1,15 @@
+variables:
+  DOTVVM_ARTIFACTS: $CI_PROJECT_DIR/artifacts
+
+default:
+  cache:
+    paths:
+      - .npm/
+      - .nuget/
+  artifacts:
+    paths:
+      - artifacts/
+
 build-solution:
   image: registry.gitlab.com/cafstep/dotvvm-test/dotvvm
   stage: build
@@ -8,10 +20,6 @@ build-solution:
         && cd $CI_PROJECT_DIR/src
         && dotnet restore --packages $CI_PROJECT_DIR/.nuget Crossplatform.sln
         && dotnet build --no-restore Crossplatform.sln
-  cache:
-    paths:
-      - .npm/
-      - .nuget/
   only:
     - gitlab-ci-test
 
@@ -20,14 +28,10 @@ run-unit-tests:
   stage: test
   script:
     - dotnet test $CI_PROJECT_DIR/src/DotVVM.Framework.Tests.Common
-        --logger "junit,LogFilePath=$CI_PROJECT_DIR/artifacts/TEST-Common.xml"
+        --logger "junit,LogFilePath=$CI_PROJECT_DIR/artifacts/Common.JUnit.xml"
         --configuration Release
-  cache:
-    paths:
-      - .npm/
-      - .nuget/
   artifacts:
     reports:
-      junit: artifacts/TEST-Common.xml
+      junit: artifacts/**/*.JUnit.xml
   only:
     - gitlab-ci-test

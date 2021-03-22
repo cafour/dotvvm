@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup Condition="$(DOTVVM_ARTIFACTS) != ''">
+    <OutDir>$([MSBuild]::NormalizeDirectory('$(DOTVVM_ARTIFACTS)'))</OutDir>
+  </PropertyGroup>
+</Project>
