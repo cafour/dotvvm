@@ -1,5 +1,5 @@
 variables:
-  DOTVVM_ARTIFACTS: $CI_PROJECT_DIR/artifacts
+  DOTVVM_ROOT: $CI_PROJECT_DIR
 
 default:
   cache:
