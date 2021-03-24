@@ -19,7 +19,7 @@ build-solution:
         && npm run build
         && cd $CI_PROJECT_DIR/src
         && dotnet restore --packages $CI_PROJECT_DIR/.nuget Crossplatform.sln
-        && dotnet build --no-restore Crossplatform.sln
+        && dotnet build --no-restore --configuration Release Crossplatform.sln
   only:
     - gitlab-ci-test
 
