@@ -41,8 +41,10 @@ run-ui-tests:
   image: registry.gitlab.com/cafstep/dotvvm-test/dotvvm
   stage: test
   script:
-    - dotnet run $CI_PROJECT_DIR/src/DotVVM.Samples.BasicSamples.AspNetCoreLatest --no-build &
-        && dotnet test $CI_PROJECT_DIR/src/DotVVM.Samples.Tests.csproj
+    - dotnet run --project $CI_PROJECT_DIR/src/DotVVM.Samples.BasicSamples.AspNetCoreLatest
+        --no-build
+        --configuration Release
+    - dotnet test $CI_PROJECT_DIR/src/DotVVM.Samples.Tests.csproj
         --no-build
         --logger "junit;LogFilePath=$CI_PROJECT_DIR/artifacts/Samples.JUnit.xml"
         --configuration Release
