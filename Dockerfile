@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0
+FROM mcr.microsoft.com/dotnet/sdk:3.1
 
 ENV \
     LANG=C.UTF-8 \
@@ -12,3 +12,5 @@ RUN apt-get -q update \
         chromium \
         chromium-driver \
     && apt-get -q clean
+
+COPY src /src
