@@ -36,7 +36,7 @@ run-unit-tests:
     reports:
       junit: artifacts/**/*.JUnit.xml
   only:
-    - gitlab-ci-test
+    - ci-test
 
 run-ui-tests:
   image: registry.gitlab.com/cafstep/dotvvm-test/dotvvm
