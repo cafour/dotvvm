@@ -22,7 +22,7 @@ build-solution:
         && dotnet restore --packages $CI_PROJECT_DIR/.nuget Crossplatform.sln
         && dotnet build --no-restore --configuration Release Crossplatform.sln
   only:
-    - gitlab-ci-test
+    - ci-test
 
 run-unit-tests:
   image: registry.gitlab.com/cafstep/dotvvm-test/dotvvm
@@ -55,4 +55,4 @@ run-ui-tests:
     reports:
       junit: artifacts/**/*.JUnit.xml
   only:
-    - gitlab-ci-test
+    - ci-test
