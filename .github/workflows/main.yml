@@ -8,6 +8,7 @@ on:
 jobs:
   build-solution:
     runs-on: ubuntu-latest
+    container: registry.gitlab.com/cafstep/dotvvm-test/dotvvm
     env:
       DOTVVM_ROOT: $GITHUB_WORKSPACE
       DISPLAY: :42
@@ -25,7 +26,7 @@ jobs:
         working-directory: ./src/DotVVM.Framework
       - run: npm run build
         working-directory: ./src/DotVVM.Framework
-      - run: dotnet restore --package $GITHUB_WORKSPACE/.nuget Crossplatform.sln
+      - run: dotnet restore --packages $GITHUB_WORKSPACE/.nuget Crossplatform.sln
         working-directory: ./src
       - run: dotnet build --no-restore --configuration Release Crossplatform.sln
         working-directory: ./src
