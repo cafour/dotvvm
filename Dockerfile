@@ -11,6 +11,5 @@ RUN apt-get -q update \
         npm \
         chromium \
         chromium-driver \
+        xvfb \
     && apt-get -q clean
-
-COPY src /src

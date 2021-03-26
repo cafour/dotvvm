@@ -1,5 +1,6 @@
 variables:
   DOTVVM_ROOT: $CI_PROJECT_DIR
+  DISPLAY: ":42"
 
 default:
   cache:
@@ -41,6 +42,7 @@ run-ui-tests:
   image: registry.gitlab.com/cafstep/dotvvm-test/dotvvm
   stage: test
   script:
+    - Xvfb $DISPLAY -screen 0 800x600x16 &
     - dotnet run --project $CI_PROJECT_DIR/src/DotVVM.Samples.BasicSamples.AspNetCoreLatest
         --no-build
         --configuration Release
