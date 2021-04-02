@@ -15,11 +15,11 @@ build-solution:
   image: registry.gitlab.com/cafstep/dotvvm-test/dotvvm
   stage: build
   script:
-    - cd $CI_PROJECT_DIR/src/DotVVM.Framework
-        && npm ci --cache $CI_PROJECT_DIR/.npm --prefer-offline
+    - cd $DOTVVM_ROOT/src/DotVVM.Framework
+        && npm ci --cache $DOTVVM_ROOT/.npm --prefer-offline
         && npm run build
-        && cd $CI_PROJECT_DIR/src
-        && dotnet restore --packages $CI_PROJECT_DIR/.nuget Crossplatform.sln
+        && cd $DOTVVM_ROOT/src
+        && dotnet restore --packages $DOTVVM_ROOT/.nuget Crossplatform.sln
         && dotnet build --no-restore --configuration Release Crossplatform.sln
   only:
     - ci-test
@@ -28,9 +28,9 @@ run-unit-tests:
   image: registry.gitlab.com/cafstep/dotvvm-test/dotvvm
   stage: test
   script:
-    - dotnet test $CI_PROJECT_DIR/src/DotVVM.Framework.Tests.Common
+    - dotnet test $DOTVVM_ROOT/src/DotVVM.Framework.Tests.Common
         --no-build
-        --logger "junit;LogFilePath=$CI_PROJECT_DIR/artifacts/Common.JUnit.xml"
+        --logger "junit;LogFilePath=$DOTVVM_ROOT/artifacts/Common.JUnit.xml"
         --configuration Release
   artifacts:
     reports:
@@ -43,13 +43,13 @@ run-ui-tests:
   stage: test
   script:
     - Xvfb $DISPLAY -screen 0 800x600x16 &
-    - dotnet run --project $CI_PROJECT_DIR/src/DotVVM.Samples.BasicSamples.AspNetCoreLatest
+    - dotnet run --project $DOTVVM_ROOT/src/DotVVM.Samples.BasicSamples.AspNetCoreLatest
         --no-build
         --configuration Release
         --urls http://localhost:16018/ &
-    - dotnet test $CI_PROJECT_DIR/src/DotVVM.Samples.Tests
+    - dotnet test $DOTVVM_ROOT/src/DotVVM.Samples.Tests
         --no-build
-        --logger "junit;LogFilePath=$CI_PROJECT_DIR/artifacts/Samples.JUnit.xml"
+        --logger "junit;LogFilePath=$DOTVVM_ROOT/artifacts/Samples.JUnit.xml"
         --configuration Release
   artifacts:
     reports:

@@ -5,34 +5,75 @@ on:
     branches:
       - ci-test
 
+env:
+  DOTVVM_ROOT: $GITHUB_WORKSPACE
+  DISPLAY: :42
+
 jobs:
   build-solution:
     runs-on: ubuntu-latest
     container: registry.gitlab.com/cafstep/dotvvm-test/dotvvm
-    env:
-      DOTVVM_ROOT: $GITHUB_WORKSPACE
-      DISPLAY: :42
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
         with:
-          path: $GITHUB_WORKSPACE/.npm
-          key: npm-${{ hashFiles('src/DotVVM.Framework/package-lock.json') }}
+          path: $DOTVVM_ROOT/.npm
+          key: npm-${{ hashFiles('**/package-lock.json') }}
       - uses: actions/cache@v2
         with:
-          path: $GITHUB_WORKSPACE/.nuget
-          key: nuget
-      - run: npm ci --cache $GITHUB_WORKSPACE/.npm --prefer-offline
+          path: $DOTVVM_ROOT/.nuget
+          key: nuget-${{ hashFiles('**/packages.lock.json') }}
+      - run: echo $DOTVVM_ROOT
+      - run: npm ci --cache $DOTVVM_ROOT/.npm --prefer-offline
         working-directory: ./src/DotVVM.Framework
       - run: npm run build
         working-directory: ./src/DotVVM.Framework
-      - run: dotnet restore --packages $GITHUB_WORKSPACE/.nuget Crossplatform.sln
+      - run: dotnet restore --packages $DOTVVM_ROOT/.nuget Crossplatform.sln
         working-directory: ./src
       - run: dotnet build --no-restore --configuration Release Crossplatform.sln
         working-directory: ./src
       - uses: actions/upload-artifact@v2
         with:
           name: built-solution
-          path: artifacts/
+          path: $DOTVVM_ROOT/artifacts/
+
+  run-unit-tests:
+    runs-on: ubuntu-latest
+    container: registry.gitlab.com/cafstep/dotvvm-test/dotvvm
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: built-solution
+      - run: dotnet test $DOTVVM_ROOT/src/DotVVM.Framework.Tests.Common
+        --no-build
+        --logger trx
+        --configuration Release
+      - uses: actions/upload-artifact@v2
+        with:
+          name: common-unit-tests
+          path: $DOTVVM_ROOT/artifacts/**/*.trx
+
+  run-ui-tests:
+    runs-on: ubuntu-latest
+    container: registry.gitlab.com/cafstep/dotvvm-test/dotvvm
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: built-solution
+      - uses: actions/checkout@v2
+      - run: Xvfb $DISPLAY -screen 0 800x600x16 &
+      - run: dotnet run --project $DOTVVM_ROOT/src/DotVVM.Samples.BasicSamples.AspNetCoreLatest
+        --no-build
+        --configuration Release
+        --urls http://localhost:16018/ &
+      - run: dotnet test $CI_PROJECT_DIR/src/DotVVM.Samples.Tests
+        --no-build
+        --logger trx
+        --configuration Release
+      - uses: actions/upload-artifact@v2
+        with:
+          name: common-unit-tests
+          path: $DOTVVM_ROOT/artifacts/**/*.trx
+
 
 # Built with ❤ by the DotVVM team with a nudge from the [Pipeline Foundation](https://pipeline.foundation)
