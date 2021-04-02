@@ -44,6 +44,7 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: built-solution
+      - uses: actions/checkout@v2
       - run: >
           dotnet test $DOTVVM_ROOT/src/DotVVM.Framework.Tests.Common
             --no-build
