@@ -23,7 +23,6 @@ jobs:
         with:
           path: $DOTVVM_ROOT/.nuget
           key: nuget-${{ hashFiles('**/packages.lock.json') }}
-      - run: echo $DOTVVM_ROOT
       - run: npm ci --cache $DOTVVM_ROOT/.npm --prefer-offline
         working-directory: ./src/DotVVM.Framework
       - run: npm run build
@@ -35,7 +34,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: built-solution
-          path: $DOTVVM_ROOT/artifacts/
+          path: artifacts/
 
   run-unit-tests:
     runs-on: ubuntu-latest
@@ -53,7 +52,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: common-unit-tests
-          path: $DOTVVM_ROOT/artifacts/**/*.trx
+          path: artifacts/**/*.trx
 
   run-ui-tests:
     runs-on: ubuntu-latest
@@ -78,7 +77,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: common-unit-tests
-          path: $DOTVVM_ROOT/artifacts/**/*.trx
+          path: artifacts/**/*.trx
 
 
 # Built with ❤ by the DotVVM team with a nudge from the [Pipeline Foundation](https://pipeline.foundation)
