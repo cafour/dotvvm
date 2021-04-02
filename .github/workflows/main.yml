@@ -45,6 +45,7 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: built-solution
+          path: artifacts/
       - run: |
           dotnet test $DOTVVM_ROOT/src/DotVVM.Framework.Tests.Common \
             --no-build \
@@ -65,6 +66,7 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: built-solution
+          path: artifacts/
       - run: Xvfb $DISPLAY -screen 0 800x600x16 &
       - run: |
           dotnet run --project $DOTVVM_ROOT/src/DotVVM.Samples.BasicSamples.AspNetCoreLatest \
