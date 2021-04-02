@@ -35,4 +35,4 @@ jobs:
           name: built-solution
           path: artifacts/
 
-# Built with ❤ by [Pipeline Foundation](https://pipeline.foundation)
+# Built with ❤ by the DotVVM team with a nudge from the [Pipeline Foundation](https://pipeline.foundation)
