@@ -44,10 +44,11 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: built-solution
-      - run: dotnet test $DOTVVM_ROOT/src/DotVVM.Framework.Tests.Common
-        --no-build
-        --logger trx
-        --configuration Release
+      - run: >
+        dotnet test $DOTVVM_ROOT/src/DotVVM.Framework.Tests.Common
+          --no-build
+          --logger trx
+          --configuration Release
       - uses: actions/upload-artifact@v2
         with:
           name: common-unit-tests
@@ -62,14 +63,16 @@ jobs:
           name: built-solution
       - uses: actions/checkout@v2
       - run: Xvfb $DISPLAY -screen 0 800x600x16 &
-      - run: dotnet run --project $DOTVVM_ROOT/src/DotVVM.Samples.BasicSamples.AspNetCoreLatest
-        --no-build
-        --configuration Release
-        --urls http://localhost:16018/ &
-      - run: dotnet test $CI_PROJECT_DIR/src/DotVVM.Samples.Tests
-        --no-build
-        --logger trx
-        --configuration Release
+      - run: >
+        dotnet run --project $DOTVVM_ROOT/src/DotVVM.Samples.BasicSamples.AspNetCoreLatest
+          --no-build
+          --configuration Release
+          --urls http://localhost:16018/ &
+      - run: >
+        dotnet test $CI_PROJECT_DIR/src/DotVVM.Samples.Tests
+          --no-build
+          --logger trx
+          --configuration Release
       - uses: actions/upload-artifact@v2
         with:
           name: common-unit-tests
