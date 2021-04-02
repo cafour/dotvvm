@@ -50,6 +50,7 @@ jobs:
             --no-build \
             --logger trx \
             --configuration Release
+      - run: find $DOTVVM_ROOT/artifacts
       - uses: actions/upload-artifact@v2
         with:
           name: common-unit-tests
@@ -71,7 +72,7 @@ jobs:
             --configuration Release \
             --urls http://localhost:16018/ &
       - run: |
-          dotnet test $CI_PROJECT_DIR/src/DotVVM.Samples.Tests \
+          dotnet test $DOTVVM_ROOT/src/DotVVM.Samples.Tests \
             --no-build \
             --logger trx \
             --configuration Release
