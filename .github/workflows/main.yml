@@ -6,7 +6,7 @@ on:
       - ci-test
 
 env:
-  DOTVVM_ROOT: $GITHUB_WORKSPACE
+  DOTVVM_ROOT: ${{ env.GITHUB_WORKSPACE }}
   DISPLAY: :42
 
 jobs:
