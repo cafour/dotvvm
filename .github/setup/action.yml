@@ -28,7 +28,9 @@ runs:
   # .NET
   - uses: actions/setup-dotnet@v1
     with:
-      dotnet-version: [5.0.x, 6.0.x]
+      dotnet-version: |
+        5.0.x
+        6.0.x
   - if: ${{ runner.os == 'Windows' }}
     uses: microsoft/setup-msbuild@v1.1
 
