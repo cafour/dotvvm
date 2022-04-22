@@ -6,6 +6,12 @@ inputs:
     default: src/DotVVM.sln
     description: Path to a Visual Studio solution
     required: false
+  azure-artifacts-feed:
+    required: false
+    description: An URL to an Azure Artifacts NuGet feed
+  azure-artifacts-pat:
+    required: false
+    description: A PAT to publish on Azure Artifacts
 
 runs:
   using: composite
@@ -33,6 +39,9 @@ runs:
       dotnet-version: |
         5.0.x
         6.0.x
+      source-url: ${{ env.AZURE_ARTIFACTS_FEED_URL }}
+    env:
+      NUGET_AUTH_TOKEN: ${{ inputs.azure-artifacts-pat }}
   - if: ${{ runner.os == 'Windows' }}
     uses: microsoft/setup-msbuild@v1.1
 
